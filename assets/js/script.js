@@ -28,15 +28,15 @@ $(function () {
 
 
 let localArray = {
-  9:'test9',
-  10:'test10',
-  11:'test11',
-  12:'test12',
-  1:'test1',
-  2:'test2',
-  3:'test3',
-  4:'test4',
-  5:'test5'
+  0:{time: 9, timeFormat:'9AM', name: 'test9'},
+  1:{time: 10, timeFormat:'10AM', name: 'test10'},
+  2:{time: 11, timeFormat:'11AM', name: 'test11'},
+  3:{time: 12, timeFormat:'12PM', name: 'test12'},
+  4:{time: 1, timeFormat:'1PM', name: 'test1'},
+  5:{time: 2, timeFormat:'2PM', name: 'test2'},
+  6:{time: 3, timeFormat:'3PM', name: 'test3'},
+  7:{time: 4, timeFormat:'4PM', name: 'test4'},
+  8:{time: 5, timeFormat:'5PM', name: 'test5'}
 }
 
 localStorage.setItem("calendarArray", JSON.stringify(localArray));
@@ -46,32 +46,26 @@ let tempArray = JSON.parse(localStorage.getItem("calendarArray")) || [];
 
 
 //generate each row as an element
-for (let i = 0; i < Object.keys(tempArray).length; i++) {
-        
+for (let i = 0; i < Object.keys(tempArray).length; i++) {    
+  //create a div for each hour
   let hourBlock = document.createElement("div");
-  
-  
-  
-  
-  //get key name and append it to the string below
-  hourBlock.id = "hour-" + ;
+
+  hourBlock.id = "hour-" + tempArray[i].time;
   hourBlock.className = "row time-block past";
-  
+  //create the row
   let hourBlock0 = document.createElement("div");
   hourBlock0.className = "col-2 col-md-1 hour text-center py-3";
-
-  //get key name and append it to string below and use dayjs to convert time
-  hourBlock0.textContent = "9AM";
-  
+  //add the left margin label
+  hourBlock0.textContent = tempArray[i].timeFormat;
+  //textarea
   let hourBlock1 = document.createElement("textArea");
   hourBlock1.className = "col-8 col-md-10 description";
   hourBlock1.setAttribute("rows", 3);
-  
-  
+  //button
   let hourBlock2 = document.createElement("button");
   hourBlock2.className = "btn saveBtn col-2 col-md-1";
   hourBlock2.setAttribute("aria-label", "save");
-
+//i element
   let hourBlock3 = document.createElement("i");
   hourBlock3.className = "fas fa-save";
   hourBlock3.setAttribute("aria-hidden", "true");
