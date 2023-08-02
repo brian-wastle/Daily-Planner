@@ -1,5 +1,6 @@
 let hourContainer = document.getElementById("hour-container");
-
+let dateAndTime = document.querySelector("#date-and-time");
+dateAndTime.textContent = dayjs().format("MMM DD, YYYY");
 
 
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
@@ -28,44 +29,55 @@ $(function () {
 
 
 let localArray = {
-  0:{time: 9, timeFormat:'9AM', name: 'test9'},
-  1:{time: 10, timeFormat:'10AM', name: 'test10'},
-  2:{time: 11, timeFormat:'11AM', name: 'test11'},
-  3:{time: 12, timeFormat:'12PM', name: 'test12'},
-  4:{time: 1, timeFormat:'1PM', name: 'test1'},
-  5:{time: 2, timeFormat:'2PM', name: 'test2'},
-  6:{time: 3, timeFormat:'3PM', name: 'test3'},
-  7:{time: 4, timeFormat:'4PM', name: 'test4'},
-  8:{time: 5, timeFormat:'5PM', name: 'test5'}
+  0:{time: 9, timeFormat:'9 AM', name: 'test9'},
+  1:{time: 10, timeFormat:'10 AM', name: 'test10'},
+  2:{time: 11, timeFormat:'11 AM', name: 'test11'},
+  3:{time: 12, timeFormat:'12 PM', name: 'test12'},
+  4:{time: 13, timeFormat:'1 PM', name: 'test1'},
+  5:{time: 14, timeFormat:'2 PM', name: 'test2'},
+  6:{time: 15, timeFormat:'3 PM', name: 'test3'},
+  7:{time: 16, timeFormat:'4 PM', name: 'test4'},
+  8:{time: 17, timeFormat:'5 PM', name: 'test5'}
 }
 
-localStorage.setItem("calendarArray", JSON.stringify(localArray));
 
+
+localStorage.setItem("calendarArray", JSON.stringify(localArray));
 
 let tempArray = JSON.parse(localStorage.getItem("calendarArray")) || [];
 
 
-//generate each row as an element
+
+
+
+
+//generate each row as a new element
 for (let i = 0; i < Object.keys(tempArray).length; i++) {    
   //create a div for each hour
   let hourBlock = document.createElement("div");
 
   hourBlock.id = "hour-" + tempArray[i].time;
   hourBlock.className = "row time-block past";
+  hourBlock.setAttribute("data-time", tempArray[i].time);
+  
   //create the row
   let hourBlock0 = document.createElement("div");
   hourBlock0.className = "col-2 col-md-1 hour text-center py-3";
+  
   //add the left margin label
   hourBlock0.textContent = tempArray[i].timeFormat;
+  
   //textarea
   let hourBlock1 = document.createElement("textArea");
   hourBlock1.className = "col-8 col-md-10 description";
   hourBlock1.setAttribute("rows", 3);
+  
   //button
   let hourBlock2 = document.createElement("button");
   hourBlock2.className = "btn saveBtn col-2 col-md-1";
   hourBlock2.setAttribute("aria-label", "save");
-//i element
+  
+  //i element
   let hourBlock3 = document.createElement("i");
   hourBlock3.className = "fas fa-save";
   hourBlock3.setAttribute("aria-hidden", "true");
@@ -77,9 +89,25 @@ for (let i = 0; i < Object.keys(tempArray).length; i++) {
   hourBlock.appendChild(hourBlock2);
   hourBlock2.appendChild(hourBlock3);
 
+
+  //compare time to current time to color code boxes
+let timeVar = parseInt(document.querySelectorAll(".row")[i].dataset.time);
+
+if ( timeVar > dayjs().hour() ) {
+  hourBlock1.classList.add("future");
+}
+else if (timeVar < dayjs().hour()) {
+  hourBlock1.classList.add("past");
+}
+else {
+  hourBlock1.classList.add("present");
+}
+
     };
 
-//compare time to current time to color code boxes
+
+
+
 
 //pull from local storage to populate hourly notes
 //document.querySelectorAll("textArea")[0].value = localStorage.getItem("");
