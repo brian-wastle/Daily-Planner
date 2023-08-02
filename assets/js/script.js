@@ -14,30 +14,23 @@ $(function () {
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
   //
-  // TODO: Add code to apply the past, present, or future class to each time
-  // block by comparing the id to the current hour. HINTS: How can the id
-  // attribute of each time-block be used to conditionally add or remove the
-  // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
-  //
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
   //
-  // TODO: Add code to display the current date in the header of the page.
 });
 
 
 let localArray = {
-  0:{time: 9, timeFormat:'9 AM', name: 'test9'},
-  1:{time: 10, timeFormat:'10 AM', name: 'test10'},
-  2:{time: 11, timeFormat:'11 AM', name: 'test11'},
-  3:{time: 12, timeFormat:'12 PM', name: 'test12'},
-  4:{time: 13, timeFormat:'1 PM', name: 'test1'},
-  5:{time: 14, timeFormat:'2 PM', name: 'test2'},
-  6:{time: 15, timeFormat:'3 PM', name: 'test3'},
-  7:{time: 16, timeFormat:'4 PM', name: 'test4'},
-  8:{time: 17, timeFormat:'5 PM', name: 'test5'}
+  0:{time: 9, timeFormat:'9 AM', activity: 'test9'},
+  1:{time: 10, timeFormat:'10 AM', activity: 'test10'},
+  2:{time: 11, timeFormat:'11 AM', activity: 'test11'},
+  3:{time: 12, timeFormat:'12 PM', activity: 'test12'},
+  4:{time: 13, timeFormat:'1 PM', activity: 'test1'},
+  5:{time: 14, timeFormat:'2 PM', activity: 'test2'},
+  6:{time: 15, timeFormat:'3 PM', activity: 'test3'},
+  7:{time: 16, timeFormat:'4 PM', activity: 'test4'},
+  8:{time: 17, timeFormat:'5 PM', activity: 'test5'}
 }
 
 
@@ -91,19 +84,41 @@ for (let i = 0; i < Object.keys(tempArray).length; i++) {
 
 
   //compare time to current time to color code boxes
-let timeVar = parseInt(document.querySelectorAll(".row")[i].dataset.time);
+  let timeVar = parseInt(document.querySelectorAll(".row")[i].dataset.time);
 
-if ( timeVar > dayjs().hour() ) {
-  hourBlock1.classList.add("future");
-}
-else if (timeVar < dayjs().hour()) {
-  hourBlock1.classList.add("past");
-}
-else {
-  hourBlock1.classList.add("present");
-}
+  if ( timeVar > dayjs().hour() ) {
+    hourBlock1.classList.add("future");
+  }
+  else if (timeVar < dayjs().hour()) {
+    hourBlock1.classList.add("past");
+  }
+  else {
+    hourBlock1.classList.add("present");
+  }
 
-    };
+};
+
+
+let saveButton = document.querySelector("#hour-9");
+
+saveButton.lastChild.addEventListener('click', function(event) { // Step 2
+
+        console.log('Click!');
+
+    });
+
+// saveButton.addEventListener("click", function(event) {
+//   event.preventDefault();
+//   let target = event.target;
+//   tempArray[target.parentElement.parentElement.dataset.time].activity = saveButton.parentElement.previousSibling.value;
+
+  // tempArray = JSON.parse(localStorage.getItem("calendarArray"))
+  
+
+
+  // localStorage.setItem("calendarArray", JSON.stringify(saveButton.parentElement.previousSibling.value));
+// });
+
 
 
 
