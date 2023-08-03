@@ -53,13 +53,13 @@ for (let i = 0; i < Object.keys(tempArray).length; i++) {
   
   //button
   let hourBlock2 = document.createElement("button");
-  hourBlock2.className = "btn saveBtn col-2 col-md-1";
+  hourBlock2.className = "btninput btn saveBtn col-2 col-md-1";
   hourBlock2.id = tempArray[i].time;
   hourBlock2.setAttribute("aria-label", "save");
   
   //i element
   let hourBlock3 = document.createElement("i");
-  hourBlock3.className = "fas fa-save";
+  hourBlock3.className = "btninput fas fa-save";
   hourBlock3.id = tempArray[i].time;
   hourBlock3.setAttribute("aria-hidden", "true");
 
@@ -88,13 +88,10 @@ for (let i = 0; i < Object.keys(tempArray).length; i++) {
 
 
 
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
 $(function addListener() {
 
   hourContainer.addEventListener('click', function(event) {
-    if (event.target.closest('.btn')) {
+    if (event.target.matches('.btninput')) {
       let newLog = document.getElementById(event.target.id);
       let newInt = parseInt(event.target.id);
       
@@ -110,32 +107,9 @@ $(function addListener() {
     }
   })
 
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
-  //
-
-
-
+  
 });
 
 
 
-  // tempArray = JSON.parse(localStorage.getItem("calendarArray"))
-  
-
-
-  // localStorage.setItem("calendarArray", JSON.stringify(saveButton.parentElement.previousSibling.value));
-// });
-
-
-
-
-
-
-//pull from local storage to populate hourly notes
-//document.querySelectorAll("textArea")[0].value = localStorage.getItem("");
-
-//when save button is saved
-//event delegation on button for storing hourly notes in localStorage
-//
+ 
