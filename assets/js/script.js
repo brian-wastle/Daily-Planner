@@ -1,4 +1,4 @@
-let hourContainer = document.getElementById("hour-container");
+let hourContainer = document.querySelector('#hour-container')
 let dateAndTime = document.querySelector("#date-and-time");
 dateAndTime.textContent = dayjs().format("MMM DD, YYYY");
 
@@ -63,16 +63,19 @@ for (let i = 0; i < Object.keys(tempArray).length; i++) {
   //textarea
   let hourBlock1 = document.createElement("textArea");
   hourBlock1.className = "col-8 col-md-10 description";
+  hourBlock1.id = tempArray[i].time;
   hourBlock1.setAttribute("rows", 3);
   
   //button
   let hourBlock2 = document.createElement("button");
   hourBlock2.className = "btn saveBtn col-2 col-md-1";
+  hourBlock2.id = tempArray[i].time;
   hourBlock2.setAttribute("aria-label", "save");
   
   //i element
   let hourBlock3 = document.createElement("i");
   hourBlock3.className = "fas fa-save";
+  hourBlock3.id = tempArray[i].time;
   hourBlock3.setAttribute("aria-hidden", "true");
 
   //hourBlock1.value = localStorage.getItem(tempArray[i]);
@@ -99,18 +102,21 @@ for (let i = 0; i < Object.keys(tempArray).length; i++) {
 };
 
 
-let saveButton = document.querySelector("#hour-9");
+hourContainer.addEventListener('click', function(event) {
+  if (event.target.closest('.btn')) {
+    let newEvent = document.getElementById(event.target.id);
+    let newInt = parseInt(event.target.id);
+    for (let i = 0; i < Object.keys(tempArray).length; i++) {
+      if (newInt == tempArray[i].time) {
+        tempArray[i].activity = newEvent.value;
+      }
+      
+    }
 
-saveButton.lastChild.addEventListener('click', function(event) { // Step 2
+    localStorage.setItem("calendarArray", JSON.stringify(tempArray));
 
-        console.log('Click!');
-
-    });
-
-// saveButton.addEventListener("click", function(event) {
-//   event.preventDefault();
-//   let target = event.target;
-//   tempArray[target.parentElement.parentElement.dataset.time].activity = saveButton.parentElement.previousSibling.value;
+  }
+})
 
   // tempArray = JSON.parse(localStorage.getItem("calendarArray"))
   
