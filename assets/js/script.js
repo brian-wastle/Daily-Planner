@@ -3,7 +3,9 @@ let dateAndTime = document.querySelector("#date-and-time");
 dateAndTime.textContent = dayjs().format("MMM DD, YYYY");
 
 
-
+if (dayjs().hour() > 17 ) {
+  localStorage;
+}
 
 
 let localArray = {
@@ -19,7 +21,7 @@ let localArray = {
 }
 
 
-if (JSON.parse(localStorage.getItem("calendarArray")) === null) {
+if ((JSON.parse(localStorage.getItem("calendarArray")) === null) || (dayjs().hour() > 23 )) {
   localStorage.setItem("calendarArray", JSON.stringify(localArray));
 }
 
