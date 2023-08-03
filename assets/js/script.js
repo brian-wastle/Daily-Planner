@@ -3,45 +3,27 @@ let dateAndTime = document.querySelector("#date-and-time");
 dateAndTime.textContent = dayjs().format("MMM DD, YYYY");
 
 
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
-$(function () {
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
-  //
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
-  //
-});
+
 
 
 let localArray = {
-  0:{time: 9, timeFormat:'9 AM', activity: 'test9'},
-  1:{time: 10, timeFormat:'10 AM', activity: 'test10'},
-  2:{time: 11, timeFormat:'11 AM', activity: 'test11'},
-  3:{time: 12, timeFormat:'12 PM', activity: 'test12'},
-  4:{time: 13, timeFormat:'1 PM', activity: 'test1'},
-  5:{time: 14, timeFormat:'2 PM', activity: 'test2'},
-  6:{time: 15, timeFormat:'3 PM', activity: 'test3'},
-  7:{time: 16, timeFormat:'4 PM', activity: 'test4'},
-  8:{time: 17, timeFormat:'5 PM', activity: 'test5'}
+  0:{time: 9, timeFormat:'9 AM', activity: ''},
+  1:{time: 10, timeFormat:'10 AM', activity: ''},
+  2:{time: 11, timeFormat:'11 AM', activity: ''},
+  3:{time: 12, timeFormat:'12 PM', activity: ''},
+  4:{time: 13, timeFormat:'1 PM', activity: ''},
+  5:{time: 14, timeFormat:'2 PM', activity: ''},
+  6:{time: 15, timeFormat:'3 PM', activity: ''},
+  7:{time: 16, timeFormat:'4 PM', activity: ''},
+  8:{time: 17, timeFormat:'5 PM', activity: ''}
 }
 
 
-
-localStorage.setItem("calendarArray", JSON.stringify(localArray));
+if (JSON.parse(localStorage.getItem("calendarArray")) === null) {
+  localStorage.setItem("calendarArray", JSON.stringify(localArray));
+}
 
 let tempArray = JSON.parse(localStorage.getItem("calendarArray")) || [];
-
-
-
-
 
 
 //generate each row as a new element
@@ -65,6 +47,7 @@ for (let i = 0; i < Object.keys(tempArray).length; i++) {
   hourBlock1.className = "col-8 col-md-10 description";
   hourBlock1.id = tempArray[i].time;
   hourBlock1.setAttribute("rows", 3);
+  hourBlock1.value = tempArray[i].activity;
   
   //button
   let hourBlock2 = document.createElement("button");
@@ -102,21 +85,39 @@ for (let i = 0; i < Object.keys(tempArray).length; i++) {
 };
 
 
-hourContainer.addEventListener('click', function(event) {
-  if (event.target.closest('.btn')) {
-    let newEvent = document.getElementById(event.target.id);
-    let newInt = parseInt(event.target.id);
-    for (let i = 0; i < Object.keys(tempArray).length; i++) {
-      if (newInt == tempArray[i].time) {
-        tempArray[i].activity = newEvent.value;
-      }
+
+// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
+// the code isn't run until the browser has finished rendering all the elements
+// in the html.
+$(function addListener() {
+
+  hourContainer.addEventListener('click', function(event) {
+    if (event.target.closest('.btn')) {
+      let newLog = document.getElementById(event.target.id);
+      let newInt = parseInt(event.target.id);
       
+      for (let i = 0; i < Object.keys(tempArray).length; i++) {
+        if (newInt == tempArray[i].time) {
+          tempArray[i].activity = newLog.value;
+        }
+        
+      }
+  
+      localStorage.setItem("calendarArray", JSON.stringify(tempArray));
+  
     }
+  })
 
-    localStorage.setItem("calendarArray", JSON.stringify(tempArray));
+  // TODO: Add code to get any user input that was saved in localStorage and set
+  // the values of the corresponding textarea elements. HINT: How can the id
+  // attribute of each time-block be used to do this?
+  //
 
-  }
-})
+
+
+});
+
+
 
   // tempArray = JSON.parse(localStorage.getItem("calendarArray"))
   
